@@ -8,6 +8,10 @@ function checkActiveUser() {
             window.location.href = "login.html";    
         }
         
+    } else {
+        if (document.getElementById('indexPage') !== null) {
+            window.location.href = "src/pages/dashboard.html";    
+        }
     }
 }
 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Clinic | App</title>
+    <link rel="icon" type="image/x-icon" href="../public/image/favicon.png">
+    <script src="../public/js/jquery.js"></script>
+    <script src="../public/js/bootstrap.bundle.min.js"></script>
+    <script src="../public/js/datatables.min.js"></script>
+    <script src="../public/js/utils.js"></script>
+    <script src="../public/js/patient.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/datatables.min.css">
+    <link rel="stylesheet" href="../public/css/dataTables.bootstrap5.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Medical Clinic</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i
+                                class="fa-solid fa-gauge-high mx-2"></i>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-regular fa-calendar-days mx-2"></i>Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="patient.html"><i
+                                class="fa-solid fa-hospital-user mx-2"></i>Patients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-user-doctor mx-2"></i>Doctors</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link btn" onclick="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="my-3">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-secondary">
+                        <i class="fa-solid fa-hospital-user mx-2"></i>Patients
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="my-1">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary" onclick="addPatient()">
+                        Add new patient
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col">
+                <table id="patientTable" class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insert / Update Modal -->
+    <div class="modal fade" id="insertUpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalTitle">Insert | Update Patient</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="name" class="col-sm-4 col-form-label">Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="address" class="col-sm-4 col-form-label">Address</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="address">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="city" class="col-sm-4 col-form-label">City</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="city">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="phone_number" class="col-sm-4 col-form-label">Phone Number</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="phone_number" >
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="email">
+                        </div>
+                    </div>
+                </div>
+                <div id="alertError" class="alert alert-danger fade d-none" role="alert">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="validateFields()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalTitle">Delete Patient</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="deleteModalAlert" class="alert alert-danger" role="alert">
+                        <input type="hidden" id="deleteName">
+                        Do you confirm the exclusion of this patient?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="deletePatient()">delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        checkActiveUser();
+        populatePatientTable();
+    </script>
+
+</body>
+
+</html>
