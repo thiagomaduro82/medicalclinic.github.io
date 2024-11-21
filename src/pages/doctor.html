@@ -10,7 +10,7 @@
     <script src="../public/js/bootstrap.bundle.min.js"></script>
     <script src="../public/js/datatables.min.js"></script>
     <script src="../public/js/utils.js"></script>
-    <script src="../public/js/patient.js"></script>
+    <script src="../public/js/doctor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/datatables.min.css">
@@ -36,11 +36,11 @@
                         <a class="nav-link" href="appointment.html"><i class="fa-regular fa-calendar-days mx-2"></i>Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="patient.html"><i
+                        <a class="nav-link" href="patient.html"><i
                                 class="fa-solid fa-hospital-user mx-2"></i>Patients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="doctor.html"><i class="fa-solid fa-user-doctor mx-2"></i>Doctors</a>
+                        <a class="nav-link active" href="doctor.html"><i class="fa-solid fa-user-doctor mx-2"></i>Doctors</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col">
                     <h3 class="text-secondary">
-                        <i class="fa-solid fa-hospital-user mx-2"></i>Patients
+                        <i class="fa-solid fa-user-doctor mx-2"></i>Doctors
                     </h3>
                 </div>
             </div>
@@ -64,27 +64,25 @@
         <div class="my-1">
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary" onclick="addPatient()">
-                        Add new patient
+                    <button class="btn btn-primary" onclick="addDoctor()">
+                        Add new doctor
                     </button>
                 </div>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col">
-                <table id="patientTable" class="table table-sm table-striped">
+                <table id="doctorTable" class="table table-sm table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Address</th>
-                            <th>City</th>
                             <th>Phone Number</th>
                             <th>Email</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="patientTableBody">
+                    <tbody id="doctorTableBody">
 
                     </tbody>
                 </table>
@@ -98,7 +96,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle">Insert | Update Patient</h1>
+                    <h1 class="modal-title fs-5" id="modalTitle">Insert | Update Doctor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -107,18 +105,6 @@
                         <label for="name" class="col-sm-4 col-form-label">Name</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="name">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="address" class="col-sm-4 col-form-label">Address</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="address">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="city" class="col-sm-4 col-form-label">City</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="city">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -151,18 +137,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle">Delete Patient</h1>
+                    <h1 class="modal-title fs-5" id="modalTitle">Delete Doctor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="deleteModalAlert" class="alert alert-danger" role="alert">
-                        <input type="hidden" id="patient_id">
-                        Do you confirm the exclusion of this patient?
+                        <input type="hidden" id="doctor_id">
+                        Do you confirm the exclusion of this doctor?
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" onclick="deletePatient()">delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteDoctor()">delete</button>
                 </div>
             </div>
         </div>
@@ -170,7 +156,7 @@
 
     <script>
         checkActiveUser();
-        populatePatientTable();
+        populateDoctorTable();
     </script>
 
 </body>
