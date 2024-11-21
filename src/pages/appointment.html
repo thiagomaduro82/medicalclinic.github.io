@@ -10,7 +10,7 @@
     <script src="../public/js/bootstrap.bundle.min.js"></script>
     <script src="../public/js/datatables.min.js"></script>
     <script src="../public/js/utils.js"></script>
-    <script src="../public/js/patient.js"></script>
+    <script src="../public/js/appointment.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../public/css/datatables.min.css">
@@ -33,10 +33,10 @@
                                 class="fa-solid fa-gauge-high mx-2"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="appointment.html"><i class="fa-regular fa-calendar-days mx-2"></i>Appointments</a>
+                        <a class="nav-link active" href="appointment.html"><i class="fa-regular fa-calendar-days mx-2"></i>Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="patient.html"><i
+                        <a class="nav-link" href="patient.html"><i
                                 class="fa-solid fa-hospital-user mx-2"></i>Patients</a>
                     </li>
                     <li class="nav-item">
@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col">
                     <h3 class="text-secondary">
-                        <i class="fa-solid fa-hospital-user mx-2"></i>Patients
+                        <i class="fa-regular fa-calendar-days mx-2"></i>Appointments
                     </h3>
                 </div>
             </div>
@@ -64,27 +64,27 @@
         <div class="my-1">
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary" onclick="addPatient()">
-                        Add new patient
+                    <button class="btn btn-primary" onclick="addAppointment()">
+                        Add new appoitment
                     </button>
                 </div>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col">
-                <table id="patientTable" class="table table-sm table-striped">
+                <table id="appointmentTable" class="table table-sm table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="patientTableBody">
+                    <tbody id="appointmentTableBody">
 
                     </tbody>
                 </table>
@@ -98,39 +98,45 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle">Insert | Update Patient</h1>
+                    <h1 class="modal-title fs-5" id="modalTitle">Add new Appoitment</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="id">
                     <div class="mb-3 row">
-                        <label for="name" class="col-sm-4 col-form-label">Name</label>
+                        <label for="patient" class="col-sm-4 col-form-label">Patient</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name">
+                            <select id="patient" class="form-select">
+
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="address" class="col-sm-4 col-form-label">Address</label>
+                        <label for="doctor" class="col-sm-4 col-form-label">Doctor</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="address">
+                            <select id="doctor" class="form-select">
+
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="city" class="col-sm-4 col-form-label">City</label>
+                        <label for="date" class="col-sm-4 col-form-label">Date</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="city">
+                            <input type="date" class="form-control" id="date_appointment">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="phone_number" class="col-sm-4 col-form-label">Phone Number</label>
+                        <label for="time" class="col-sm-4 col-form-label">Time</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="phone_number" >
+                            <input type="time" class="form-control" id="time_appointment">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <label for="status" class="col-sm-4 col-form-label">Status</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="email">
+                            <select id="status" class="form-select">
+                                
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -151,18 +157,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalTitle">Delete Patient</h1>
+                    <h1 class="modal-title fs-5" id="modalTitle">Delete Doctor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="deleteModalAlert" class="alert alert-danger" role="alert">
-                        <input type="hidden" id="patient_id">
-                        Do you confirm the exclusion of this patient?
+                        <input type="hidden" id="appointment_id">
+                        Do you confirm the exclusion of this appointment?
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" onclick="deletePatient()">delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteAppointment()">delete</button>
                 </div>
             </div>
         </div>
@@ -170,7 +176,7 @@
 
     <script>
         checkActiveUser();
-        populatePatientTable();
+        populateAppointmentTable();
     </script>
 
 </body>
