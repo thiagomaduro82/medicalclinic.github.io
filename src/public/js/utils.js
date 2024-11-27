@@ -3,9 +3,9 @@ function checkActiveUser() {
     if (localStorage.getItem('user') === null) {
         console.log('No active user');
         if (document.getElementById('indexPage') !== null) {
-            window.location.href = "src/pages/login.html";    
+            window.location.href = "src/pages/home.html";    
         } else {
-            window.location.href = "login.html";    
+            window.location.href = "home.html";    
         }
         
     } else {
