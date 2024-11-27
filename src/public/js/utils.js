@@ -19,6 +19,6 @@ function checkActiveUser() {
 function logout() {
     if (localStorage.getItem('user') !== null) {
         localStorage.removeItem('user');
-        checkActiveUser();
+        window.location.href = "home.html";
     }
 }
